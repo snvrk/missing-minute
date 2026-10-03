@@ -54,6 +54,8 @@ See [`CITATION.cff`](CITATION.cff), or use GitHub's "Cite this repository" butto
 
 ## License
 
+[![W2FPL](https://snvrkotics.com/brand/licenses/w2fpl/w2fpl-88x31.png)](https://snvrkotics.com/licenses/w2fpl)
+
 The code, results, figures and paper are released under the [W2FPL, Version 1](LICENSE) (DO WHAT THE FUCK YOU WANT TO, WHEN YOU WANT TO PUBLIC LICENSE). See https://snvrkotics.com/w2fpl.
 
 **Exception:** the files in `data/` are third-party data. They are not covered by the W2FPL and keep their original terms. See [`data/README.md`](data/README.md).
