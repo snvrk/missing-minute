@@ -5,7 +5,7 @@ The goal is a permanent DOI now, a preprint where statisticians will see it, and
 | # | Step | Who | Status |
 |---|---|---|---|
 | 1 | Create an ORCID iD and add it to Zenodo, arXiv and the journal account | You | To do |
-| 2 | Zenodo DOI from a GitHub release | You (2 clicks), then me | Tag `v1.0` pushed |
+| 2 | Zenodo DOI from a GitHub release | You (2 clicks), then me | Ready for the release |
 | 3 | arXiv preprint, `stat.ME` (cross-list `stat.AP`) | You submit; I prepare the files | Needs an endorser |
 | 4 | Journal: *The American Statistician* | You submit; I convert to LaTeX and trim | After arXiv |
 | 5 | Popular version for *Significance* | Pitch after the preprint | Optional |
@@ -19,7 +19,7 @@ Register at https://orcid.org. Then add the iD to `CITATION.cff` and `.zenodo.js
 The order matters: turn the integration on *before* creating the release.
 
 1. Sign in at https://zenodo.org with GitHub. Go to **Account → GitHub** and flip the switch next to `snvrk/missing-minute`.
-2. On GitHub, open **Releases → Draft a new release**, choose the existing tag `v1.0`, title it `The Missing Minute v1.0`, and publish.
+2. On GitHub, open **Releases → Draft a new release**, type `v1.0` in the tag box, choose **Create new tag: v1.0 on publish**, target `main`, title it `The Missing Minute v1.0`, and publish.
 3. Zenodo archives the release within a few minutes, using the title, abstract and keywords in `.zenodo.json`. Open the new record and check two fields:
    - **License:** choose "Other (Open)" and paste https://snvrkotics.com/licenses/w2fpl.
    - **Related works:** the data files are third-party; the record already points to the repo, which explains this.
