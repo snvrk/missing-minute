@@ -2,8 +2,8 @@
   "title": "The Missing Minute: Phase, Memory and Waiting in \"Every X Minutes\" Claims",
   "upload_type": "publication",
   "publication_type": "preprint",
-  "version": "2.0",
-  "description": "<p>“An event happens every X minutes” reads as a timetable, but a timetable needs two numbers: an interval and the minute it starts. The second is never given, so a claim that sounds testable cannot be checked against a clock. We resolve this paradox and show that it hides two measurable quantities that such claims always omit. First, we prove that a well-defined start minute (phase) exists exactly when the first Fourier coefficient of the process’s intensity at period X is nonzero; for every stationary process, including the pooled processes behind public statistics, it is zero and the start minute does not exist. When it does exist, it is recoverable from event times alone, with a closed-form standard error and a detection threshold of about 4.8/ρ² events, both confirmed by simulation. Second, we introduce phase memory: how many events into the future an “every X” schedule stays predictable. We show that memory is governed by a single function, the variance of the time spanned by k consecutive intervals, which sorts all such processes into three types: scheduled (memory never fades), renewal (memory fades geometrically) and pooled (memory is gone after one event). Applied to the most famous “every X minutes” claim there is, Old Faithful geyser, the theory finds something a renewal model misses: in the 1985 record of 299 consecutive eruptions, the geyser keeps time 2.6 times more regularly over two eruptions than over one, and remembers its phase for about 5.4 eruptions (6.6 hours) rather than the 1.2 a renewal model predicts. A one-line phase-diffusion law predicts the observed coherence at every lag. Finally, we show by Palm calculus that the mean wait from a random moment is (X/2)(1 + c²) for any stationary process, renewal or not. Every “every X minutes” claim should therefore come with two more numbers: its coefficient of variation and its phase memory.</p>",
+  "version": "1.0",
+  "description": "<p>A claim that an event happens “every X minutes” seems to need two numbers, an interval and the minute it starts, yet only the first is ever given. We show that this paradox has an exact answer, and that it hides two quantities such claims always leave out. First, the start minute exists exactly when the process has a spectral line at frequency 1/X, an atom in its Bartlett spectrum (Theorem 1). When it exists, the minute belongs to each realization: it is uniformly distributed across realizations, recoverable from event times with a closed-form standard error, and impossible to state in any summary of the process’s law. Poisson, renewal and pooled processes have no line, so they have no start minute. Second, we define phase memory, the number of events over which a schedule stays predictable. It is the interval noise spectrum seen through a Fejér filter, equals 1/(2π²F) for the long-run Fano factor F, and never fades exactly when the intervals are a schedule plus stationary errors (Theorem 3). Phase memory has a practical cost: applied to a process with memory but no line, the standard Rayleigh test for periodicity rejects at rate α^(1/τ) instead of α, where τ ≈ 2ℓ when memory is long. We give a corrected test. Old Faithful’s 1985 record shows all of this at once. Its intervals alternate (lag-1 correlation −0.70; renewal rejected, p < 10⁻⁴). It keeps time 2.6 times more precisely over two eruptions than over one (95% CI 2.2–3.0), because the two-interval filter cancels the alternation, much as a spin echo does. It remembers its phase for about five eruptions (95% CI 2.3–6.4), against the 1.4 a renewal model predicts. An apparent periodicity across the whole record (naive p = 0.007) vanishes once memory is accounted for (p = 0.46). A century of British coal-mining disasters shows the opposite type: no phase, no memory, and a mean wait three times the naive one. For any stationary process, the mean wait from a random moment is (X/2)(1 + c²), and a clock’s phase memory is bounded by the entropy it produces per tick: ℓ ≤ Δs/4π². Every “every X” claim should come with two more numbers: its coefficient of variation and its phase memory.</p>",
   "creators": [
     {
       "name": "Gottfried, Caleb",
@@ -12,12 +12,14 @@
   ],
   "keywords": [
     "point processes",
+    "Bartlett spectrum",
     "phase estimation",
     "circular statistics",
     "Rayleigh test",
-    "cyclostationarity",
+    "phase diffusion",
     "renewal processes",
     "Palm calculus",
+    "thermodynamic uncertainty relation",
     "inspection paradox",
     "Old Faithful"
   ]

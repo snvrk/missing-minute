@@ -1,5 +1,5 @@
 """
-"The Missing Minute", version 2: theory checks and the Old Faithful analysis.
+"The Missing Minute": theory checks and the Old Faithful analysis.
 Every number in the paper's Tables 1-6 is produced here. Seeded; run:
     python3 code/analysis.py       (writes results/results2.json)
 Data: geyser.csv, the 1985 Old Faithful record of Azzalini & Bowman (1990)
