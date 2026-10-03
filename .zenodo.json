@@ -1,0 +1,24 @@
+{
+  "title": "The Missing Minute: Phase, Memory and Waiting in \"Every X Minutes\" Claims",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "version": "2.0",
+  "description": "<p>“An event happens every X minutes” reads as a timetable, but a timetable needs two numbers: an interval and the minute it starts. The second is never given, so a claim that sounds testable cannot be checked against a clock. We resolve this paradox and show that it hides two measurable quantities that such claims always omit. First, we prove that a well-defined start minute (phase) exists exactly when the first Fourier coefficient of the process’s intensity at period X is nonzero; for every stationary process, including the pooled processes behind public statistics, it is zero and the start minute does not exist. When it does exist, it is recoverable from event times alone, with a closed-form standard error and a detection threshold of about 4.8/ρ² events, both confirmed by simulation. Second, we introduce phase memory: how many events into the future an “every X” schedule stays predictable. We show that memory is governed by a single function, the variance of the time spanned by k consecutive intervals, which sorts all such processes into three types: scheduled (memory never fades), renewal (memory fades geometrically) and pooled (memory is gone after one event). Applied to the most famous “every X minutes” claim there is, Old Faithful geyser, the theory finds something a renewal model misses: in the 1985 record of 299 consecutive eruptions, the geyser keeps time 2.6 times more regularly over two eruptions than over one, and remembers its phase for about 5.4 eruptions (6.6 hours) rather than the 1.2 a renewal model predicts. A one-line phase-diffusion law predicts the observed coherence at every lag. Finally, we show by Palm calculus that the mean wait from a random moment is (X/2)(1 + c²) for any stationary process, renewal or not. Every “every X minutes” claim should therefore come with two more numbers: its coefficient of variation and its phase memory.</p>",
+  "creators": [
+    {
+      "name": "Gottfried, Caleb",
+      "affiliation": "SNVRKOTICS LLC"
+    }
+  ],
+  "keywords": [
+    "point processes",
+    "phase estimation",
+    "circular statistics",
+    "Rayleigh test",
+    "cyclostationarity",
+    "renewal processes",
+    "Palm calculus",
+    "inspection paradox",
+    "Old Faithful"
+  ]
+}

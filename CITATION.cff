@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the paper below."
+title: "The Missing Minute: Phase, Memory and Waiting in \"Every X Minutes\" Claims"
+version: "2.0"
+date-released: 2026-10-03
+repository-code: "https://github.com/snvrk/missing-minute"
+license-url: "https://snvrkotics.com/licenses/w2fpl"
+keywords:
+  - point processes
+  - phase estimation
+  - circular statistics
+  - Rayleigh test
+  - cyclostationarity
+  - renewal processes
+  - Palm calculus
+  - inspection paradox
+  - Old Faithful
+authors:
+  - family-names: Gottfried
+    given-names: Caleb
+    affiliation: SNVRKOTICS LLC
+preferred-citation:
+  type: article
+  title: "The Missing Minute: Phase, Memory and Waiting in \"Every X Minutes\" Claims"
+  authors:
+    - family-names: Gottfried
+      given-names: Caleb
+      affiliation: SNVRKOTICS LLC
+  year: 2026
+  month: 10
+  publisher:
+    name: Zenodo
+references:
+  - type: article
+    title: "A look at some data on the Old Faithful geyser"
+    authors:
+      - family-names: Azzalini
+        given-names: A.
+      - family-names: Bowman
+        given-names: A. W.
+    journal: "Applied Statistics"
+    volume: 39
+    issue: 3
+    start: 357
+    end: 365
+    year: 1990

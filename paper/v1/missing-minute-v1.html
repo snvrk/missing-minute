@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Missing Minute</title>
+<meta name="author" content="Caleb Gottfried">
+<style>
+  @page { size: Letter; margin: 1in; @bottom-center { content: counter(page); font-family: "Liberation Serif", serif; font-size: 9pt; } }
+  html { font-family: "Liberation Serif", "Times New Roman", Times, serif; font-size: 11pt; line-height: 1.45; color: #111; }
+  body { margin: 0; }
+  h1 { font-size: 18pt; line-height: 1.25; text-align: center; margin: 0 0 6pt; }
+  .subtitle { text-align: center; font-size: 12.5pt; font-style: italic; margin: 0 0 14pt; }
+  .author { text-align: center; margin: 0; font-size: 11.5pt; }
+  .affil { text-align: center; margin: 2pt 0 0; font-size: 10pt; }
+  .meta { text-align: center; margin: 10pt 0 0; font-size: 9.5pt; color: #333; }
+  .abstract { margin: 18pt 0.4in 6pt; font-size: 10pt; text-align: justify; }
+  .abstract h2 { font-size: 10.5pt; text-align: center; margin: 0 0 4pt; text-transform: uppercase; letter-spacing: 0.06em; }
+  .kw { margin: 6pt 0.4in 0; font-size: 9.5pt; }
+  h2 { font-size: 12pt; margin: 16pt 0 6pt; break-after: avoid; }
+  h3 { font-size: 11pt; font-style: italic; font-weight: normal; margin: 12pt 0 4pt; break-after: avoid; }
+  p { margin: 0 0 7pt; text-align: justify; hyphens: auto; }
+  .eq { display: flex; justify-content: center; align-items: baseline; margin: 6pt 0 8pt; font-style: italic; break-inside: avoid; }
+  .eq .body { flex: 1; text-align: center; }
+  .eq .num { font-style: normal; width: 3em; text-align: right; }
+  .up { font-style: normal; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.8pt; margin: 8pt 0 4pt; break-inside: avoid; }
+  th, td { border-top: 0.5pt solid #aaa; padding: 3pt 4pt; text-align: right; vertical-align: top; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { border-top: 1pt solid #111; border-bottom: 0.8pt solid #111; }
+  tbody tr:last-child td { border-bottom: 1pt solid #111; }
+  .cap { font-size: 9.5pt; text-align: center; margin: 2pt 0 10pt; }
+  .note { font-size: 9.5pt; }
+  ol.refs { font-size: 9.5pt; padding-left: 18pt; }
+  ol.refs li { margin-bottom: 3pt; text-align: left; }
+  code { font-family: "Liberation Mono", "Courier New", monospace; font-size: 9pt; }
+  blockquote { margin: 6pt 0.4in; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>The Missing Minute</h1>
+<p class="subtitle">On the Phase Problem in “Every X Minutes” Statistics, and Why It Dissolves</p>
+<p class="author">Caleb Gottfried</p>
+<p class="affil">SNVRKOTICS LLC · snvrk@snvrkotics.com</p>
+<p class="meta">Version 1.0 · October 2026</p>
+
+<div class="abstract">
+  <h2>Abstract</h2>
+  <p>Public statistics are often phrased as “an event happens every <i>X</i> minutes.” Read literally, the sentence describes a periodic process, and a periodic process is fully specified only by its period and its phase: the moment the count started. That moment is never given. This creates an apparent paradox: a claim that sounds precise and testable cannot, as stated, be checked against any clock. We formalize the paradox and show that it dissolves under either reading of the sentence. If the process were truly periodic, the missing phase would not be missing at all: it can be estimated from observed event times with the circular-statistics methods astronomers use to time pulsars, and in simulation we recover it to within 0.03 minutes even when every event is jittered by up to 3 minutes. If the process is not periodic, which is the case for essentially every real statistic of this kind, then no phase exists to be found: the sentence is a disguised average rate, <i>X</i> = <i>T</i>/<i>N</i>, and it is measured by counting, not by timing. The phrasing still misleads in a second, measurable way. In simulations of four processes that all satisfy “every 10 minutes” on average, the mean wait from a random moment to the next event ranged from 5.0 to 11.4 minutes, exactly as predicted by the renewal-theory identity E[<i>W</i>] = (<i>X</i>/2)(1 + <i>c</i><sup>2</sup>), where <i>c</i> is the coefficient of variation of the intervals. We close with guidance for writing such statistics so that they can be checked.</p>
+</div>
+<p class="kw"><b>Keywords:</b> statistical communication; point processes; Poisson process; renewal theory; inspection paradox; circular statistics; Rayleigh test; phase estimation</p>
+
+<h2>1. Introduction</h2>
+<p>“A baby is born every few seconds.” “Someone is diagnosed every few minutes.” Statements of this shape are a staple of public health campaigns, news reporting and official clocks; the U.S. Census Bureau’s population clock, for example, expresses births, deaths and net international migration each as one event every so many seconds [1]. The form is memorable because it converts an abstract annual total into something a reader can feel happening in real time.</p>
+<p>It also invites a question that is rarely asked. If an event happens every <i>X</i> minutes, <i>which</i> minutes? A train that leaves every ten minutes leaves at specific times: at :03, :13, :23, and so on. Its timetable needs two numbers, the interval and the offset. A statistic that gives the interval alone is, read literally, half a timetable. No one can say whether they have just missed the event or are about to witness it, and no one can stand by a clock and check the claim. We call this the <i>phase problem</i>.</p>
+<p>This paper takes the phase problem seriously, states it formally (Section 2), and resolves it (Sections 3 and 4). The resolution has two halves, one for each way the sentence can be read, and both are supported by reproducible simulations (Section 5). Section 6 shows that, although the phase problem dissolves, the “every <i>X</i> minutes” phrasing misleads in a different and measurable way, through the waiting-time or inspection paradox. Section 7 offers guidance for writers, and Section 8 discusses limitations.</p>
+
+<h2>2. The paradox</h2>
+<p>Let <i>S</i> be the statement “an event occurs every <i>X</i> minutes.” Its most literal reading is a strictly periodic point process, in which the <i>k</i>-th event occurs at</p>
+<div class="eq"><span class="body">t<sub>k</sub> = φ + kX,&nbsp;&nbsp;&nbsp; k = 0, 1, 2, …</span><span class="num">(1)</span></div>
+<p>where <i>φ</i> ∈ [0, <i>X</i>) is the phase. Under this reading, verifying <i>S</i> means checking that events occur at the predicted times, and predicting a time requires <i>φ</i>. <i>S</i> never supplies it. The paradox, then, is this:</p>
+<blockquote>A statement whose literal content is a precise timetable cannot be compared with any timetable, because half of the timetable is withheld. It sounds falsifiable, but as phrased it can’t be checked.</blockquote>
+<p>Three readings of <i>S</i> are possible, and the paradox looks different under each:</p>
+<p><i>Reading P (periodic).</i> Events follow Eq. (1) with an unknown phase. The phase is unstated but real.</p>
+<p><i>Reading R (rate).</i> <i>X</i> is the reciprocal of an average rate: <i>N</i> events counted over a window of length <i>T</i>, with <i>X</i> = <i>T</i>/<i>N</i>. Events need not be regular at all.</p>
+<p><i>Reading A (aggregate).</i> The events come from many independent sources (people, hospitals, places) and the statistic pools them, so <i>X</i> is again a rate, but for the superposition of many processes.</p>
+<p>We show that the phase problem disappears under each reading: under P because the phase can be measured, and under R and A because there is no phase to measure.</p>
+
+<h2>3. Resolution under the periodic reading: the phase is measurable</h2>
+<p>An unknown phase is a familiar problem in astronomy. A pulsar emits at a fixed period, but the observer does not know where in its cycle the first recorded photon fell. The standard tools treat each event time as an angle on a circle of circumference <i>X</i> [7, 8, 9]. For observed event times <i>t</i><sub>1</sub>, …, <i>t</i><sub><i>N</i></sub>, define the phase angles</p>
+<div class="eq"><span class="body">θ<sub>k</sub> = 2π (t<sub>k</sub> mod X) / X.</span><span class="num">(2)</span></div>
+<p>If the process is periodic with period <i>X</i>, every <i>θ</i><sub><i>k</i></sub> is the same angle, <i>2πφ/X</i>. If the process has no periodicity at <i>X</i>, the angles are spread uniformly around the circle. The mean resultant length</p>
+<div class="eq"><span class="body">R = (1/N) | Σ<sub>k</sub> e<sup>iθ<sub>k</sub></sup> |</span><span class="num">(3)</span></div>
+<p>measures the concentration: <i>R</i> = 1 for perfect periodicity and <i>R</i> ≈ 0 for none. Under the null hypothesis of uniform phases, the Rayleigh statistic <i>Z</i> = 2<i>NR</i><sup>2</sup> is approximately χ<sup>2</sup> with two degrees of freedom, so <i>p</i> ≈ exp(−<i>Z</i>/2) [7, 11]. When periodicity is present, the phase itself is estimated by the direction of the resultant:</p>
+<div class="eq"><span class="body">φ̂ = (X / 2π) · arg( Σ<sub>k</sub> e<sup>iθ<sub>k</sub></sup> ).</span><span class="num">(4)</span></div>
+<p>The phase is therefore not an input that the claimant must supply; it is an output that any observer can compute. Under reading P, the missing minute is recoverable from the data, and the statement <i>S</i> is testable after all: observe events, compute <i>Z</i>, and either find a phase or reject periodicity.</p>
+
+<h2>4. Resolution under the rate and aggregate readings: there is no phase</h2>
+<p>Under reading R, <i>X</i> is defined by <i>X</i> = <i>T</i>/<i>N</i>. That definition contains no clock times, so it has no phase, and measuring it requires only a count over a known window. The literal “every” is a figure of speech: it means “on average, once per.” A statistic computed from an annual total, such as a number of births in a year divided into the number of minutes in a year, is of this kind by construction.</p>
+<p>Reading A explains why real “every <i>X</i> minutes” processes are not periodic even when their components might be. By the Palm–Khintchine theorem, the superposition of many independent, sparse point processes converges to a Poisson process, whatever the individual processes look like [5, 6]. A Poisson process has exponentially distributed, independent intervals and is memoryless: its future does not depend on when you start the clock. It has a rate but no phase. Pooled statistics such as “someone, somewhere, every <i>X</i> minutes” therefore describe processes for which the question “starting at which minute?” has no answer, because no minute is special.</p>
+<p>Either way, the paradox dissolves. If the claim is literally periodic, the phase can be measured. If it is not, the phase does not exist, and the claim is about a count.</p>
+
+<h2>5. Simulations</h2>
+<p>We simulated four processes that all satisfy “an event every 10 minutes” on average, over a window of <i>T</i> = 100,000 minutes (about 69 days, roughly 10,000 events each): (A) strictly periodic with a random, undisclosed phase; (B) a homogeneous Poisson process; (C) the superposition of 50 independent periodic sources, each with a period near 500 minutes and a random phase; and (D) an inhomogeneous Poisson process whose rate varies by ±50% over a 24-hour cycle, generated by thinning [10]. For each, we estimated <i>X</i> by <i>T</i>/<i>N</i>, computed the coefficient of variation <i>c</i> of the intervals, applied the Rayleigh test at period <i>X</i>, and measured waiting times from 200,000 uniformly random inspection moments. All code is reproducible from a fixed seed (Appendix).</p>
+
+<table>
+  <thead>
+    <tr><th>Process</th><th>Events</th><th><i>T</i>/<i>N</i> (min)</th><th>Interval <i>c</i></th><th>Rayleigh <i>R</i> at <i>X</i></th><th><i>p</i></th><th>Mean wait (min)</th><th>Interval containing a random moment (min)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>A. Periodic, unknown phase</td><td>10,000</td><td>10.00</td><td>0.00</td><td>1.000</td><td style="white-space:nowrap">&lt; 10<sup>−300</sup></td><td>5.01</td><td>10.00</td></tr>
+    <tr><td>B. Poisson</td><td>10,014</td><td>9.99</td><td>1.00</td><td>0.019</td><td>0.031</td><td>9.96</td><td>19.92</td></tr>
+    <tr><td>C. Superposition of 50</td><td>9,919</td><td>10.08</td><td>1.00</td><td>0.003</td><td>0.93</td><td>10.02</td><td>20.10</td></tr>
+    <tr><td>D. Poisson, daily cycle</td><td>9,926</td><td>10.07</td><td>1.12</td><td>0.009</td><td>0.44</td><td>11.36</td><td>22.77</td></tr>
+  </tbody>
+</table>
+<p class="cap">Table 1. Four processes that all happen “every 10 minutes.” The stated <i>X</i> is 10 in each case.</p>
+
+<p><i>The rate is recovered in every case.</i> <i>T</i>/<i>N</i> lies within 1% of 10 minutes for all four processes. Counting works regardless of the process.</p>
+<p><i>The phase is recovered when it exists.</i> For process A, the true, undisclosed phase was 6.287849 minutes; Eq. (4) returned 6.287849, an error below 10<sup>−9</sup> minutes. To test robustness, we added Gaussian timing noise to periodic processes (Table 2). The phase was recovered to within 0.03 minutes even with a 3-minute standard deviation, when individual events are scattered across more than half of the 10-minute cycle; the concentration <i>R</i> falls as noise grows, but the estimate of <i>φ</i> stays accurate because it pools all events.</p>
+
+<table>
+  <thead><tr><th>Timing noise (SD, min)</th><th>True phase (min)</th><th>Recovered (min)</th><th>Error (min)</th><th><i>R</i></th></tr></thead>
+  <tbody>
+    <tr><td>0.5</td><td>5.297</td><td>5.296</td><td>−0.001</td><td>0.952</td></tr>
+    <tr><td>1.0</td><td>2.946</td><td>2.958</td><td>+0.012</td><td>0.823</td></tr>
+    <tr><td>2.0</td><td>9.556</td><td>9.544</td><td>−0.012</td><td>0.456</td></tr>
+    <tr><td>3.0</td><td>2.101</td><td>2.130</td><td>+0.028</td><td>0.163</td></tr>
+  </tbody>
+</table>
+<p class="cap">Table 2. Recovering an undisclosed phase from jittered periodic events (about 10,000 events each; all <i>p</i> &lt; 10<sup>−100</sup>).</p>
+
+<p><i>Non-periodic processes show no phase.</i> For processes C and D, the Rayleigh test finds no periodicity at 10 minutes (<i>p</i> = 0.93 and 0.44), and the intervals have <i>c</i> ≈ 1, the signature of a Poisson process; C confirms the Palm–Khintchine prediction that 50 pooled periodic sources are indistinguishable from Poisson. Process B is instructive in a different way: the test returned <i>p</i> = 0.031, nominally “significant” at the 5% level, although B has no periodicity by construction. At α = 0.05, one test in twenty on a structureless process will cross the threshold; the concentration, <i>R</i> = 0.019, shows that any “phase” it suggests is negligible. A phase claimed from a single marginal test should not be believed [12].</p>
+<p><i>Hidden structure is at the wrong period.</i> Process D does have a phase, at 24 hours rather than 10 minutes: the Rayleigh test at a period of one day gives <i>R</i> = 0.25 and <i>p</i> ≈ 10<sup>−270</sup>. An “every <i>X</i> minutes” statistic says nothing about such daily or seasonal cycles, though many real processes vary by time of day and season.</p>
+
+<h2>6. The paradox that remains: how long you wait</h2>
+<p>The phase problem dissolves, but the phrasing still invites a measurable error. A reader told that an event happens every 10 minutes, arriving at a random moment, naturally expects to wait about 5 minutes. Table 1 shows that this is true only for the periodic process. For the Poisson and superposed processes the mean wait is 10 minutes, the full stated interval; for the daily-cycle process it is 11.4 minutes, longer than the interval itself.</p>
+<p>This is the inspection or waiting-time paradox of renewal theory [3, 4]. A random moment is more likely to fall in a long interval than a short one, so the interval containing it is length-biased. For a stationary renewal process with mean interval <i>X</i> and coefficient of variation <i>c</i>,</p>
+<div class="eq"><span class="body">E[W] = E[I<sup>2</sup>] / (2E[I]) = (X / 2)(1 + c<sup>2</sup>),&nbsp;&nbsp;&nbsp; E[I<sub>straddle</sub>] = X(1 + c<sup>2</sup>).</span><span class="num">(5)</span></div>
+<p>The identity predicts every row of Table 1. Periodic (<i>c</i> = 0): a wait of 5.0 and a straddling interval of 10.0. Poisson (<i>c</i> = 1): 10 and 20. Daily cycle (<i>c</i> = 1.12, so 1 + <i>c</i><sup>2</sup> = 2.26): a predicted wait of 11.37 and straddling interval of 22.75, against 11.36 and 22.77 simulated. The interval a random observer lands in averages twice the stated one for a Poisson process.</p>
+<p>The quantity a reader most naturally takes from “every <i>X</i> minutes,” how long until the next one, therefore depends on a number the statistic never states: the variability of the intervals. Two statistics with the same <i>X</i> can imply waits that differ by more than a factor of two.</p>
+
+<h2>7. Writing checkable statistics</h2>
+<p>The analysis suggests four practices for anyone communicating an “every <i>X</i> minutes” figure:</p>
+<p><i>1. Say “on average.”</i> “On average, one every <i>X</i> minutes” signals reading R and removes the false implication of a timetable.</p>
+<p><i>2. Give the count and the window.</i> “About <i>N</i> per year in [population], or one every <i>X</i> minutes on average” lets readers check the arithmetic, and the count is what was actually measured. Best [2] documents how statistics stripped of their source and denominator mutate as they are repeated.</p>
+<p><i>3. Name the population.</i> “Every <i>X</i> minutes” in a country is not every <i>X</i> minutes in a city. The figure is a property of the pooled process (reading A), not of any one place or person.</p>
+<p><i>4. Don’t imply waiting times.</i> Unless the process is known to be regular, avoid phrasing that invites “so the next one is about <i>X</i>/2 minutes away.” For a Poisson process, the expected wait from any moment is the full <i>X</i>.</p>
+
+<h2>8. Limitations</h2>
+<p>The simulations are illustrations of known theory, not measurements of any real statistic; we do not test any particular published figure. Eq. (5) assumes a stationary renewal process; it is a close approximation for process D, whose intervals are mildly dependent through the daily cycle, but not an exact law for it. The Rayleigh test detects concentration at a single trial period; searching many trial periods requires a correction for multiple testing, as in pulsar searches [8, 9]. Finally, some real processes are genuinely periodic, such as scheduled departures or automated jobs, and for those the advice is the opposite: state the phase, because it is real and useful.</p>
+
+<h2>9. Conclusion</h2>
+<p>“Every <i>X</i> minutes” appears to withhold half of a timetable: the minute the count began. The appearance is the paradox, and it dissolves on inspection. If the process were truly periodic, the missing minute could be measured from the events themselves with the tools used to time pulsars. If the process is not periodic, as pooled real-world statistics almost never are, there is no minute to withhold; the statement is an average rate, and it is checked by counting. What remains is a smaller, real problem: the phrasing suggests a waiting time it cannot support, because that time depends on the variability of the process, which the statistic never states. Writing “on average,” and giving the count, the window and the population, fixes both.</p>
+
+<h2>Code and data availability</h2>
+<p class="note">All results are produced by <code>sim.py</code> (Python 3 with NumPy), seed 20261003, distributed with this paper; it writes every number in Tables 1 and 2 to <code>results.json</code>. No external data were used.</p>
+
+<h2>Acknowledgments and disclosure</h2>
+<p class="note">Drafting of this paper and its simulation code was assisted by an AI writing tool; the author reviewed the result and is responsible for its content. No external funding was received, and the author declares no competing interests.</p>
+
+<h2>References</h2>
+<ol class="refs">
+  <li>U.S. Census Bureau. <i>U.S. and World Population Clock.</i> https://www.census.gov/popclock/.</li>
+  <li>Best, J. <i>Damned Lies and Statistics: Untangling Numbers from the Media, Politicians, and Activists.</i> University of California Press, 2001.</li>
+  <li>Feller, W. <i>An Introduction to Probability Theory and Its Applications</i>, Vol. II, 2nd ed. Wiley, 1971.</li>
+  <li>Ross, S. M. <i>Introduction to Probability Models</i>, 11th ed. Academic Press, 2014.</li>
+  <li>Cox, D. R., and Isham, V. <i>Point Processes.</i> Chapman and Hall, 1980.</li>
+  <li>Khintchine, A. Y. <i>Mathematical Methods in the Theory of Queueing.</i> Griffin, 1960.</li>
+  <li>Mardia, K. V., and Jupp, P. E. <i>Directional Statistics.</i> Wiley, 2000.</li>
+  <li>Leahy, D. A., Darbro, W., Elsner, R. F., Weisskopf, M. C., Sutherland, P. G., Kahn, S., and Grindlay, J. E. “On searches for pulsed emission with application to four globular cluster X-ray sources.” <i>The Astrophysical Journal</i> 266 (1983): 160–170.</li>
+  <li>Buccheri, R., et al. “Search for pulsed γ-ray emission from radio pulsars in the COS-B data.” <i>Astronomy and Astrophysics</i> 128 (1983): 245–251.</li>
+  <li>Lewis, P. A. W., and Shedler, G. S. “Simulation of nonhomogeneous Poisson processes by thinning.” <i>Naval Research Logistics Quarterly</i> 26, no. 3 (1979): 403–413.</li>
+  <li>Lord Rayleigh. “On the resultant of a large number of vibrations of the same pitch and of arbitrary phase.” <i>Philosophical Magazine</i> 10 (1880): 73–78.</li>
+  <li>Wasserstein, R. L., and Lazar, N. A. “The ASA statement on p-values: context, process, and purpose.” <i>The American Statistician</i> 70, no. 2 (2016): 129–133.</li>
+</ol>
+
+<h2>Appendix: simulation design</h2>
+<p class="note">Window <i>T</i> = 100,000 minutes; stated interval <i>X</i> = 10 minutes. (A) <i>t<sub>k</sub></i> = <i>φ</i> + 10<i>k</i>, with <i>φ</i> drawn uniformly from [0, 10) and withheld from the estimator. (B) Poisson count with mean <i>T</i>/<i>X</i>, event times uniform on [0, <i>T</i>). (C) 50 periodic sources, each with period 500 × U(0.9, 1.1) minutes and a uniform random phase, merged. (D) Thinning of a Poisson process of rate 1.5/<i>X</i> with acceptance probability (1 + 0.5 sin(2π<i>t</i>/1440))/1.5. Waiting times: 200,000 inspection moments drawn uniformly between the first and last events; the wait is the time to the next event and the straddling interval is the gap containing the moment. Jitter experiment: periodic times plus independent N(0, σ<sup>2</sup>) noise, σ ∈ {0.5, 1, 2, 3} minutes, with a fresh random phase each time.</p>
+
+</body>
+</html>

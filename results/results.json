@@ -1,0 +1,94 @@
+{
+  "A_periodic": {
+    "events": 10000,
+    "stated_X": 10.0,
+    "estimated_X_T_over_N": 10.0,
+    "interval_mean": 10.0,
+    "interval_cv": 1.1311462072119705e-14,
+    "rayleigh_R_at_X": 1.0,
+    "rayleigh_Z_at_X": 20000.0,
+    "rayleigh_p_at_X": 0.0,
+    "recovered_phase_min": 6.287849117712151,
+    "mean_wait_from_random_moment": 5.01062114066385,
+    "mean_interval_containing_random_moment": 10.0,
+    "true_phase_min": 6.287849117719199
+  },
+  "B_poisson": {
+    "events": 10014,
+    "stated_X": 10.0,
+    "estimated_X_T_over_N": 9.986019572598362,
+    "interval_mean": 9.985496325848345,
+    "interval_cv": 0.9963268869110422,
+    "rayleigh_R_at_X": 0.01859746144933123,
+    "rayleigh_Z_at_X": 6.9269956832132875,
+    "rayleigh_p_at_X": 0.031320017735045565,
+    "recovered_phase_min": 5.739353182538881,
+    "mean_wait_from_random_moment": 9.9639435138655,
+    "mean_interval_containing_random_moment": 19.920227742031685
+  },
+  "C_superposition_50": {
+    "events": 9919,
+    "stated_X": 10.0,
+    "estimated_X_T_over_N": 10.081661457808247,
+    "interval_mean": 10.082439707994281,
+    "interval_cv": 0.9953766452686901,
+    "rayleigh_R_at_X": 0.002666696150316723,
+    "rayleigh_Z_at_X": 0.14107334168826616,
+    "rayleigh_p_at_X": 0.9318935655755185,
+    "recovered_phase_min": 7.710012402931544,
+    "mean_wait_from_random_moment": 10.024257064627587,
+    "mean_interval_containing_random_moment": 20.09817550175286
+  },
+  "D_diurnal_poisson": {
+    "events": 9926,
+    "stated_X": 10.0,
+    "estimated_X_T_over_N": 10.074551682450132,
+    "interval_mean": 10.074883080204629,
+    "interval_cv": 1.1215726836871556,
+    "rayleigh_R_at_X": 0.00905456518943453,
+    "rayleigh_Z_at_X": 1.6275692130804726,
+    "rayleigh_p_at_X": 0.44317763536660987,
+    "recovered_phase_min": 6.475935645937963,
+    "mean_wait_from_random_moment": 11.360270740102985,
+    "mean_interval_containing_random_moment": 22.76724308276264,
+    "rayleigh_R_at_1day": 0.24982716627025195,
+    "rayleigh_Z_at_1day": 1239.035045407502,
+    "rayleigh_p_at_1day": 8.850309274154494e-270
+  },
+  "meta": {
+    "seed": 20261003,
+    "X": 10.0,
+    "T": 100000.0,
+    "inspection_samples": 200000
+  },
+  "jittered_periodic": {
+    "0.5": {
+      "true_phase": 5.296794690452776,
+      "recovered": 5.295651823492255,
+      "error_min": -0.0011428669605209052,
+      "R": 0.9522890385183358,
+      "p": 0.0
+    },
+    "1.0": {
+      "true_phase": 2.9462024873057047,
+      "recovered": 2.9580405634968154,
+      "error_min": 0.011838076191111213,
+      "R": 0.8229320550354325,
+      "p": 0.0
+    },
+    "2.0": {
+      "true_phase": 9.556495784433336,
+      "recovered": 9.544047676583572,
+      "error_min": -0.012448107849763801,
+      "R": 0.45639213575140275,
+      "p": 0.0
+    },
+    "3.0": {
+      "true_phase": 2.1014159567817203,
+      "recovered": 2.129613203609275,
+      "error_min": 0.028197246827554423,
+      "R": 0.16344815167502333,
+      "p": 9.482737311143264e-117
+    }
+  }
+}
