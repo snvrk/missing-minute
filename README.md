@@ -1,7 +1,7 @@
 # The Missing Minute
 
 **Phase, Memory and Waiting in "Every X Minutes" Claims**
-Caleb Gottfried · Version 1.0 · October 2026
+SNVRK (Caleb Gottfried) · Version 1.0 · October 3, 2026 · ORCID [0009-0000-1948-412X](https://orcid.org/0009-0000-1948-412X)
 
 📄 [Paper (PDF)](paper/missing-minute-v1.pdf) · [HTML](paper/missing-minute.html)
 

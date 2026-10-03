@@ -4,15 +4,15 @@ The goal is a permanent DOI now, a preprint where statisticians will see it, and
 
 | # | Step | Who | Status |
 |---|---|---|---|
-| 1 | Create an ORCID iD and add it to Zenodo, arXiv and the journal account | You | To do |
+| 1 | ORCID iD 0009-0000-1948-412X in the paper, `CITATION.cff` and `.zenodo.json` | Done | ✓ |
 | 2 | Zenodo DOI from a GitHub release | You (2 clicks), then me | Ready for the release |
 | 3 | arXiv preprint, `stat.ME` (cross-list `stat.AP`) | You submit; I prepare the files | Needs an endorser |
 | 4 | Journal: *The American Statistician* | You submit; I convert to LaTeX and trim | After arXiv |
 | 5 | Popular version for *Significance* | Pitch after the preprint | Optional |
 
-## 1. ORCID (10 minutes, free)
+## 1. ORCID
 
-Register at https://orcid.org. Then add the iD to `CITATION.cff` and `.zenodo.json`; send it to me and I'll do it. Zenodo, arXiv and journals all link to it, and Google Scholar uses it to merge your work under one name.
+Done. Your iD (0009-0000-1948-412X) is on the paper's title page, in `CITATION.cff` and in `.zenodo.json`, so Zenodo and GitHub will link the record to your ORCID profile.
 
 ## 2. Zenodo DOI
 
@@ -84,6 +84,10 @@ Every later GitHub release becomes a new version under the same concept DOI.
 ## 5. *Significance* (optional)
 
 *Significance*, the magazine of the Royal Statistical Society and the American Statistical Association, publishes short, illustrated articles for a general audience. Pitch a piece of about 2,500 words with the working title "Old Faithful keeps time in pairs." It would cover the start-minute paradox, the 2.6× precision in pairs, and why "one disaster every seven months" meant waiting eleven. Pitch it once the arXiv preprint is up, and say in the pitch that the research article is under review elsewhere.
+
+## SSRN
+
+Your first paper, *Ticketstorm as Mass Visual Disruption*, is on SSRN (abstract 5454695), so you already have an author page there. Once the Zenodo DOI exists, post this paper to SSRN too, with the DOI in the abstract page, so it appears alongside your first paper.
 
 ## Timeline
 

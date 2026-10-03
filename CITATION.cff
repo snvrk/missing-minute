@@ -19,7 +19,10 @@ keywords:
 authors:
   - family-names: Gottfried
     given-names: Caleb
+    orcid: "https://orcid.org/0009-0000-1948-412X"
+    email: science@snvrkotics.com
     affiliation: SNVRKOTICS LLC
+    alias: SNVRK
 preferred-citation:
   type: article
   title: "The Missing Minute: Phase, Memory and Waiting in \"Every X Minutes\" Claims"
